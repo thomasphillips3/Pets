@@ -9,6 +9,11 @@
             "UnauthRoleName": "pets-dev-20190611212032-unauthRole",
             "StackName": "pets-dev-20190611212032",
             "StackId": "arn:aws:cloudformation:us-east-1:360176309871:stack/pets-dev-20190611212032/6bfb57a0-8cc9-11e9-8f05-0e1ffe4de6a4"
+        },
+        "categories": {
+            "auth": {
+                "petsb972bf01": {}
+            }
         }
     }
 }

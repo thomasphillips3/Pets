@@ -1,0 +1,68 @@
+{
+    "identityPoolName": "petsb972bf01_identitypool_b972bf01",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "petsb9_b972bf01_lambda_log_policy",
+    "openIdLambdaRoleName": "petsb9_b972bf01_openid_lambda_role",
+    "openIdRolePolicy": "petsb9_b972bf01_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "petsb9_b972bf01_openid_lambda_iam_policy",
+    "openIdLogPolicy": "petsb9_b972bf01_openid_lambda_log_policy",
+    "userPoolName": "petsb972bf01_userpool_b972bf01",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "petsb9b972bf01_sns-role",
+    "roleExternalId": "petsb9b972bf01_role_external_id",
+    "policyName": "petsb9b972bf01-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "petsb9b972bf01_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "petsb9b972bf01_totp_lambda_role",
+    "mfaLambdaLogPolicy": "petsb9b972bf01_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "petsb9b972bf01_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "petsb9b972bf01_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "petsb9b972bf01_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "petsb9b972bf01_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "petsb9b972bf01_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "petsb972bf01",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default"
+}
