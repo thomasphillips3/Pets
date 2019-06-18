@@ -1,7 +1,9 @@
 package com.thomasphillips3.pets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -34,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapter(this);
         recyclerView.setAdapter(adapter);
+
+        FloatingActionButton buttonAddPet = findViewById(R.id.button_addPet);
+        buttonAddPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addPetIntent = new Intent(MainActivity.this, AddPetActivity.class);
+                MainActivity.this.startActivity(addPetIntent);
+            }
+        });
 
         ClientFactory.init(this);
     }
