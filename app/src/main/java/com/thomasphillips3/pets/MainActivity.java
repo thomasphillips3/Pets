@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.amplify.generated.graphql.ListPetsQuery;
+import com.amazonaws.amplify.generated.graphql.OnCreatePetSubscription;
+import com.amazonaws.mobileconnectors.appsync.AppSyncSubscriptionCall;
 import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
@@ -55,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         query();
+        subscribe();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        subscriptionWatcher.cancel();
     }
 
     public void query() {
@@ -81,6 +90,42 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFailure(@Nonnull ApolloException e) {
             Log.e(TAG, e.toString());
+        }
+    };
+
+    private AppSyncSubscriptionCall subscriptionWatcher;
+
+    private void subscribe() {
+        OnCreatePetSubscription subscription = OnCreatePetSubscription.builder().build();
+        subscriptionWatcher = ClientFactory.appSyncClient().subscribe(subscription);
+        subscriptionWatcher.execute(subCallback);
+    }
+
+    private AppSyncSubscriptionCall.Callback subCallback = new AppSyncSubscriptionCall.Callback() {
+        @Override
+        public void onResponse(@Nonnull Response response) {
+            Log.i("Response", "Received subscription notification: " + response.data().toString());
+
+            OnCreatePetSubscription.OnCreatePet data = ((OnCreatePetSubscription.Data)response.data()).onCreatePet();
+            final ListPetsQuery.Item addedItem = new ListPetsQuery.Item(data.__typename(), data.id(), data.name(), data.description());
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pets.add(addedItem);
+                    adapter.notifyItemInserted(pets.size() - 1);
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e("Error", e.toString());
+        }
+
+        @Override
+        public void onCompleted() {
+            Log.i("Completed", "Subscription completed");
         }
     };
 }
