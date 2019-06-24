@@ -32,6 +32,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService" />
     </application>
 
 </manifest>
